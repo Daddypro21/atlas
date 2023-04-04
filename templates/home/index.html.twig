@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+{% if app.user.managername is defined   %}
+    <p>{{app.user.managername }}</p>
+{% endif %}
+{% endblock %}
