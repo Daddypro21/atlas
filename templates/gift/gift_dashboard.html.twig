@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row mt-5 mb-5">
+        <div class="col-md-4">
+            <h4> {{app.user.name}}</h4>
+        </div>
+        <div class="col-md-8">
+            <h2> Listes des dons</h2>
+            {% if all_gift is not empty %}
+                {% for gift in all_gift %}
+
+                    {{dump(gift)}}
+
+                {% endfor %}
+            {% else %}
+
+                <p> L' historique de don est vide</p>
+            {% endif %}
+        </div>
+{% endblock %}

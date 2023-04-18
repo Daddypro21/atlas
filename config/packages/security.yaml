@@ -8,9 +8,9 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
 
         # app_user_provider:
-        #     entity:
-        #         class: App\Entity\User
-        #         property: email
+        #      entity:
+        #          class: App\Entity\User
+        #          property: email
 
         app_hotel_provider:
                  entity:

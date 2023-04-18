@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert ;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity(fields: ['email'], message: ' il y \' a déjà un compte créé avec cet email')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+
 #[ORM\InheritanceType("JOINED")]
 #[ORM\DiscriminatorColumn(name:"type",type:"string")]
 #[ORM\DiscriminatorMap(['benevole' =>Benevole::class,'hotel' => Hotel::class ,

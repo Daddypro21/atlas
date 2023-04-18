@@ -2,17 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\BenevoleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use App\Repository\BenevoleRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\AttributeOverride;
+use Doctrine\ORM\Mapping\AttributeOverrides;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: BenevoleRepository::class)]
+
+
 class Benevole extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column] 
-    private ?int $id = null;
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -22,14 +24,14 @@ class Benevole extends User
     #[ORM\Column(length: 255)]
     private ?string $numberphone = null;
 
+    #[ORM\OneToMany(mappedBy: 'benevole', targetEntity: Gift::class)]
+    private Collection $gifts;
+
     public function __construct()
     {
         $this->roles = ["ROLE_BENEVOLE"];
+        $this->gifts = new ArrayCollection();
     }
-    // public function getId(): ?int
-    // {
-    //     return $this->id;
-    // }
 
     public function getName(): ?string
     {
@@ -63,6 +65,36 @@ class Benevole extends User
     public function setNumberphone(string $numberphone): self
     {
         $this->numberphone = $numberphone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gift>
+     */
+    public function getGifts(): Collection
+    {
+        return $this->gifts;
+    }
+
+    public function addGift(Gift $gift): self
+    {
+        if (!$this->gifts->contains($gift)) {
+            $this->gifts->add($gift);
+            $gift->setBenevole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGift(Gift $gift): self
+    {
+        if ($this->gifts->removeElement($gift)) {
+            // set the owning side to null (unless already changed)
+            if ($gift->getBenevole() === $this) {
+                $gift->setBenevole(null);
+            }
+        }
 
         return $this;
     }
